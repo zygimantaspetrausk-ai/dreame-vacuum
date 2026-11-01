@@ -71,7 +71,7 @@ from .dreame.map import (
     DreameVacuumMapDataJsonRenderer,
 )
 
-DREAME_TOKEN_CHANGE_INTERVAL: Final = timedelta(minutes=60)
+DREAME_TOKEN_CHANGE_INTERVAL: Final = timedelta(minutes=5)  # Mūsų namai: kaip HA
 
 JSON_CONTENT_TYPE: Final = "application/json"
 PNG_CONTENT_TYPE: Final = "image/png"
@@ -168,7 +168,7 @@ class CameraDataView(CameraView):
                 )
             else:
                 response.headers["Content-Encoding"] = "gzip"
-                response.headers["Cache-Control"] = "public, max-age=7776000, immutable"
+                response.headers["Cache-Control"] = "private, no-store"
             return response
         raise web.HTTPNotFound()
 
@@ -276,7 +276,7 @@ class CameraHistoryView(CameraView):
                 )
                 if data:
                     response.headers["Content-Encoding"] = "gzip"
-                response.headers["Cache-Control"] = "public, max-age=7776000, immutable"
+                response.headers["Cache-Control"] = "private, no-store"
                 return response
         raise web.HTTPNotFound()
 
@@ -317,7 +317,7 @@ class CameraRecoveryView(CameraView):
                 )
             elif data:
                 response.headers["Content-Encoding"] = "gzip"
-                response.headers["Cache-Control"] = "public, max-age=7776000, immutable"
+                response.headers["Cache-Control"] = "private, no-store"
             return response
         raise web.HTTPNotFound()
 
@@ -344,7 +344,7 @@ class CameraWifiView(CameraView):
             )
             if data:
                 response.headers["Content-Encoding"] = "gzip"
-            response.headers["Cache-Control"] = "public, max-age=7776000, immutable"
+            response.headers["Cache-Control"] = "private, no-store"
             return response
         raise web.HTTPNotFound()
 
@@ -355,7 +355,7 @@ class CameraResourcesView(HomeAssistantView):
     url = "/api/camera_resources_proxy/{entity_id}"
     name = "api:camera:resources"
 
-    requires_auth = False
+    requires_auth = True  # Mūsų namai: be prisijungimo nepasiekiama
 
     def __init__(self, component) -> None:
         """Initialize camera view."""
@@ -378,7 +378,7 @@ class CameraResourcesView(HomeAssistantView):
             content_type=JSON_CONTENT_TYPE,
         )
         response.headers["Content-Encoding"] = "gzip"
-        response.headers["Cache-Control"] = "public, max-age=7776000, immutable"
+        response.headers["Cache-Control"] = "private, no-store"
         return response
 
 

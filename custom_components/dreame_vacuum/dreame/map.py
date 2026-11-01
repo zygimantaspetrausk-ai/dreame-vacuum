@@ -13,7 +13,6 @@ import copy
 import numpy as np
 import hashlib
 import textwrap
-from py_mini_racer import MiniRacer
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa, padding as asym_padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
@@ -579,11 +578,11 @@ class DreameMapVacuumMapManager:
 
             url = self._get_file_url(object_name)
             if url:
-                _LOGGER.info("Request map data from cloud %s", url)
+                _LOGGER.debug("Request map data from cloud")
                 response = self._protocol.cloud.get_file(url)
                 if response is not None:
                     return response
-                _LOGGER.warning("Request map data from cloud failed %s", url)
+                _LOGGER.warning("Request map data from cloud failed")
                 if self._file_urls.get(object_name):
                     del self._file_urls[object_name]
 
@@ -1399,7 +1398,7 @@ class DreameMapVacuumMapManager:
                         object_name,
                         not (object_name.endswith("mb.tbz2") and not self._protocol.dreame_cloud),
                     )
-                    _LOGGER.info("Recovery map file url: %s = %s", object_name, map_url)
+                    _LOGGER.debug("Recovery map file url: %s", object_name)
                     if map_url:
                         return (
                             self._protocol.cloud.get_file(map_url),
@@ -13942,12 +13941,12 @@ class DreameVacuumMapOptimizer:
             map_data.optimized_pixel_type = pixel_type
             map_data.optimized_dimensions = MapImageDimensions(top, left, height, width, map_data.dimensions.grid_size)
 
-    def optimize(self, map_data, saved_map_data=None, js_optimizer=True):
+    def optimize(self, map_data, saved_map_data=None, js_optimizer=False):
         # Called from the map manager and Home Assistant executor threads, the JS optimizer is not thread safe
         with self._lock:
             return self._optimize(map_data, saved_map_data, js_optimizer)
 
-    def _optimize(self, map_data, saved_map_data=None, js_optimizer=True):
+    def _optimize(self, map_data, saved_map_data=None, js_optimizer=False):
         if map_data.need_optimization:
             if map_data.saved_map:
                 map_data.need_optimization = False
@@ -13959,7 +13958,7 @@ class DreameVacuumMapOptimizer:
             try:
                 now = time.time()
 
-                if js_optimizer:
+                if False:  # Mūsų namai: užkoduotas JS (MiniRacer) išjungtas – naudojamas Python kelias
                     if self._js_optimizer == None:
                         self._js_optimizer = MiniRacer()
                         self._js_optimizer.eval(base64.b64decode(MAP_OPTIMIZER_JS).decode("utf-8"))

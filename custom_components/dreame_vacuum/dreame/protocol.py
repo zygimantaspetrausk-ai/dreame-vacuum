@@ -1336,7 +1336,7 @@ class DreameVacuumDreameHomeCloudProtocol:
                 if status == 200:
                     return content
             except Exception as ex:
-                _LOGGER.warning("Unable to get file at %s: %s", url, ex)
+                _LOGGER.warning("Unable to get file: %s", ex)
             retries = retries + 1
         return None
 
@@ -1802,7 +1802,7 @@ class DreameVacuumMiHomeCloudProtocol:
                             if url[:4] != "http":
                                 url = f"https://account.xiaomi.com{url}"
 
-                            response = session.get(url)
+                            response = session.get(url, timeout=10)
                             if ick := self._cookie_value(response.cookies, "ick"):
                                 self._captcha_ick = ick
                                 self.captcha_img = base64.b64encode(response.content).decode()
@@ -2182,7 +2182,7 @@ class DreameVacuumMiHomeCloudProtocol:
 
     def get_file_url(self, object_name: str = "") -> Any:
         api_response = self._api_call(f'home/getfileurl{("_v3" if self._v3 else "")}', {"obj_name": object_name})
-        _LOGGER.debug("Get file url result: %s = %s", object_name, api_response)
+        _LOGGER.debug("Get file url result: %s", object_name)
         if api_response is None or not api_response.get("result") or "url" not in api_response["result"]:
             if api_response and api_response.get("code") == -8 and self._v3:
                 _LOGGER.info("get_file_url fallback to V2")
@@ -2197,7 +2197,7 @@ class DreameVacuumMiHomeCloudProtocol:
             f'v2/home/get_interim_file_url{("_pro" if self._v3 else "")}',
             {"obj_name": object_name},
         )
-        _LOGGER.debug("Get interim file url result: %s = %s", object_name, api_response)
+        _LOGGER.debug("Get interim file url result: %s", object_name)
         if api_response is None or not api_response.get("result") or "url" not in api_response["result"]:
             if api_response and api_response.get("code") == -8 and self._v3:
                 _LOGGER.info("get_interim_file_url fallback to V2")

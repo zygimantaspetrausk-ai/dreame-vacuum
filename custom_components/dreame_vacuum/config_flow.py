@@ -65,11 +65,9 @@ ACCOUNT_TYPE_MI = "mi"
 ACCOUNT_TYPE_TROUVER = "trouver"
 ACCOUNT_TYPE_LOCAL = "local"
 
+# Mūsų namai: tik Xiaomi (Mi) paskyra ir vietinis ryšys – Dreame/Mova/Trouver kelias naudoja TLS be sertifikato tikrinimo
 ACCOUNT_TYPES = [
-    ACCOUNT_TYPE_DREAME,
     ACCOUNT_TYPE_MI,
-    ACCOUNT_TYPE_MOVA,
-    ACCOUNT_TYPE_TROUVER,
     ACCOUNT_TYPE_LOCAL,
 ]
 
