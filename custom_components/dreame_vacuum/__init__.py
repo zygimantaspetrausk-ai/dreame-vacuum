@@ -10,13 +10,8 @@ import warnings
 from importlib import import_module
 from .const import DOMAIN
 
-## Dynamically load frontend.py so that it can be easily stripped
-try:
-    frontend = import_module(f"{__package__}.frontend")
-except ModuleNotFoundError as ex:
-    if ex.name != f"{__package__}.frontend":
-        raise
-    frontend = None
+# Mūsų namai: frontend.py (nuotolinis kodas iš api.tasshack.com) niekada neįkeliamas – net jei failas atsirastų
+frontend = None
 
 # Suppress python-miio FutureWarning on Python 3.13
 warnings.filterwarnings(
