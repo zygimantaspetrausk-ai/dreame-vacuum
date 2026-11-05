@@ -128,6 +128,8 @@ class DreameVacuumDreameHomeCloudProtocol:
             return out[:length]
 
         def __init__(self, host, port, server_name, timeout, strings):
+            # Mūsų namai: savadarbis TLS be serverio sertifikato tikrinimo – neleidžiamas (naudojama tik Mi paskyra)
+            raise ConnectionError("Mūsų namai: Dreame paskyros ryšys išjungtas (nėra sertifikato tikrinimo)")
             self._host = host
             self._port = port
             self._sni = server_name
