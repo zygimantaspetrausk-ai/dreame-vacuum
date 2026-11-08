@@ -1,4 +1,4 @@
-> **Mūsų namai kopija.** Peržiūrėta 2026-11-01 (originalas Tasshack/dreame-vacuum v2.0.2, f5b8472). Pašalinta: `frontend.py`
+> **Mūsų namai kopija.** Peržiūrėta 2026-11-08 (originalas Tasshack/dreame-vacuum v2.0.3, fec086c). Pašalinta: `frontend.py`
 > (supainiotas kodas, siųsdavęs raktus į api.tasshack.com ir pateikdavęs atsisiųstą kodą naršyklei), užkoduotas JS žemėlapiui
 > (MiniRacer). Palikta tik Xiaomi (Mi) paskyra ir vietinis ryšys. Kameros keliai – tik prisijungus, be viešo podėlio,
 > pasirašyti debesies URL nerašomi į žurnalą. Atnaujinimai iš originalo – tik po peržiūros.
